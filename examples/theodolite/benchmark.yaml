@@ -126,8 +126,8 @@ spec:
       offset: 0
       properties:
         externalSloUrl: "http://localhost:8082"
-        promQLQuery: "histogram_quantile(0.95,sum(irate(osm_request_duration_ms_bucket{destination_name='teastore_webui'}[1m])) by (le, destination_name))"
-        warmup: 600 #in seconds
+        promQLQuery: "histogram_quantile(0.95,sum(irate(istio_request_duration_milliseconds_bucket{destination_service=~'teastore-webui.*',response_code='200'}[1m])) by (le, destination_service))"
+        warmup: 300 #in seconds
         queryAggregation: max
         repetitionAggregation: median
         operator: lte
