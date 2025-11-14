@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: teastore-registry
+spec:
+  selector:
+    matchLabels:
+      app: teastore
+      run: teastore-registry
+  template:
+    metadata:
+      labels:
+        app: teastore
+        run: teastore-registry
+    spec:
+      terminationGracePeriodSeconds: 0
+      containers:
+        - name: teastore-registry
+          image: descartesresearch/teastore-registry:1.4.2
+          ports:
+            - containerPort: 8080

@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: teastore-webui
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: teastore
+      run: teastore-webui
+  template:
+    metadata:
+      labels:
+        app: teastore
+        run: teastore-webui
+    spec:
+      terminationGracePeriodSeconds: 0
+      containers:
+        - name: teastore-webui
+          image: descartesresearch/teastore-webui:1.4.2
+          ports:
+            - containerPort: 8080
+          env:
+            - name: HOST_NAME
+              value: "teastore-webui"
+            - name: REGISTRY_HOST
+              value: "teastore-registry"
+          readinessProbe:
+            initialDelaySeconds: 15
+            timeoutSeconds: 5
+            periodSeconds: 10
+            successThreshold: 1
+            failureThreshold: 3
+            httpGet:
+              path: "/tools.descartes.teastore.webui/rest/ready/isready"
+              port: 8080
+              scheme: HTTP
+          resources:
+            limits:
+              memory: 1000Mi
+              cpu: 500m

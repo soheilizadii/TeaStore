@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: teastore-db
+spec:
+  selector:
+    matchLabels:
+      app: teastore
+      run: teastore-db
+  template:
+    metadata:
+      labels:
+        app: teastore
+        run: teastore-db
+    spec:
+      containers:
+        - name: teastore-db
+          image: descartesresearch/teastore-db:1.4.2
+          ports:
+            - containerPort: 3306
+          resources:
+            limits:
+              memory: 16000Mi
+              cpu: 4000m

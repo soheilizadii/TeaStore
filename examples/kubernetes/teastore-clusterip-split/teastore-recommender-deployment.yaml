@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: teastore-recommender
+spec:
+  replicas: 11
+  selector:
+    matchLabels:
+      app: teastore
+      run: teastore-recommender
+  template:
+    metadata:
+      labels:
+        app: teastore
+        run: teastore-recommender
+    spec:
+      terminationGracePeriodSeconds: 0
+      containers:
+        - name: teastore-recommender
+          image: descartesresearch/teastore-recommender:development
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+          env:
+            - name: HOST_NAME
+              value: "teastore-recommender"
+            - name: REGISTRY_HOST
+              value: "teastore-registry"
+          readinessProbe:
+            initialDelaySeconds: 15
+            timeoutSeconds: 5
+            periodSeconds: 10
+            successThreshold: 1
+            failureThreshold: 3
+            httpGet:
+              path: "/tools.descartes.teastore.recommender/rest/train/isready"
+              port: 8080
+              scheme: HTTP
+          # startupProbe:
+          #   initialDelaySeconds: 15
+          #   timeoutSeconds: 5
+          #   periodSeconds: 10
+          #   successThreshold: 1
+          #   failureThreshold: 6
+          #   httpGet:
+          #     path: "/tools.descartes.teastore.recommender/rest/train/isready"
+          #     port: 8080
+          #     scheme: HTTP
+          resources:
+            limits:
+              memory: 1000Mi
+              cpu: 500m

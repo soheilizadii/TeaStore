@@ -1,0 +1,15 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PodMonitor
+metadata:
+  name: envoy-pod-monitor
+  namespace: default
+  labels:
+    release: theodolite-kube-prometheus  # must match your Prometheus release name
+spec:
+  selector:
+    matchLabels:
+      app: teastore                     # all TeaStore pods share this label
+  podMetricsEndpoints:
+  - targetPort: 15090                   # confirmed from your curl test
+    path: /stats/prometheus
+    interval: 15s
