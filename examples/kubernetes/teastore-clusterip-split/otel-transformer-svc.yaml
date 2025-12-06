@@ -1,0 +1,17 @@
+---
+# Source: teastore/templates/otel-transformer-service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: otel-transformer
+  labels:
+    app: teastore
+    run: otel-transformer
+spec:
+  type: ClusterIP
+  ports:
+    - port: 10001
+      protocol: TCP
+  selector:
+    app: teastore
+    run: otel-transformer

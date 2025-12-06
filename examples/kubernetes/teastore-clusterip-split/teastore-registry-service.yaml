@@ -1,13 +1,17 @@
+---
+# Source: teastore/templates/teastore-registry-service.yaml
 apiVersion: v1
 kind: Service
 metadata:
   name: teastore-registry
-  labels:
-    app: teastore
-    run: teastore-registry
+  labels: 
+     app: teastore
+     run: teastore-registry 
 spec:
+  type: ClusterIP
+  selector:  
+    app: teastore
+    run: teastore-registry 
   ports:
     - port: 8080
       protocol: TCP
-  selector:
-    run: teastore-registry

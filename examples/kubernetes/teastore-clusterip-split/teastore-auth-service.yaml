@@ -1,3 +1,5 @@
+---
+# Source: teastore/templates/teastore-auth-service.yaml
 apiVersion: v1
 kind: Service
 metadata:
@@ -7,7 +9,9 @@ metadata:
     run: teastore-auth
 spec:
   ports:
-    - port: 8080
+    - name: http
+      port: 8080
       protocol: TCP
   selector:
+    app: teastore
     run: teastore-auth

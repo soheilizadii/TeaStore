@@ -1,3 +1,5 @@
+---
+# Source: teastore/templates/teastore-webui-nodeport.yaml
 apiVersion: v1
 kind: Service
 metadata:
@@ -8,8 +10,11 @@ metadata:
 spec:
   type: NodePort
   ports:
-    - port: 8080
-      #nodePort: 30080
+    - name: http
+      port: 8080
+      targetPort: 8080
       protocol: TCP
+      nodePort: 30080
   selector:
+    app: teastore
     run: teastore-webui

@@ -1,0 +1,15 @@
+---
+# Source: teastore/templates/kieker-configmap.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: kieker-config
+data:
+  kieker.monitoring.properties: |-
+    kieker.monitoring.name=KIEKER
+    kieker.monitoring.enabled=true
+    kieker.monitoring.writer=kieker.monitoring.writer.tcp.SingleSocketTcpWriter
+    kieker.monitoring.writer.tcp.SingleSocketTcpWriter.hostname=otel-transformer
+    kieker.monitoring.writer.tcp.SingleSocketTcpWriter.port=10001
+    kieker.monitoring.writer.tcp.SingleSocketTcpWriter.bufferSize=655350
+    kieker.monitoring.writer.tcp.SingleSocketTcpWriter.connectionTimeoutInMs=5000

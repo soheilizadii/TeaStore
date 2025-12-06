@@ -1,3 +1,5 @@
+---
+# Source: teastore/templates/teastore-image-service.yaml
 apiVersion: v1
 kind: Service
 metadata:
@@ -10,4 +12,5 @@ spec:
     - port: 8080
       protocol: TCP
   selector:
+    app: teastore
     run: teastore-image

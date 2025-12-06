@@ -1,0 +1,28 @@
+---
+# Source: teastore/templates/otel-transformer-deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: otel-transformer
+  labels:
+    app: teastore
+    run: otel-transformer
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: teastore
+      run: otel-transformer
+  template:
+    metadata:
+      labels:
+        app: teastore
+        run: otel-transformer
+    spec:
+      containers:
+        - name: otel-transformer
+          image: "kieker/otel-transformer:kieker-2.0.2"
+          ports:
+            - containerPort: 10001
+
+

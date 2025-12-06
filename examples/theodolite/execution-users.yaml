@@ -6,10 +6,10 @@ spec:
   benchmark: teastore
   load:
     loadType: "NumUsers"
-    loadValues: [1,5]
+    loadValues: [1,2,5]
   resources:
     resourceType: "Instances"
-    resourceValues: [1]
+    resourceValues: [1,2,3]
   slos:
     - name: "uiLatency"
       properties:
@@ -20,7 +20,7 @@ spec:
       restrictions:
         - "LowerBound"
       searchStrategy: "LinearSearch"
-    duration: 300  # in seconds
+    duration: 600  # in seconds
     repetitions: 1
-    loadGenerationDelay: 60  # in seconds
+    loadGenerationDelay: 300  # in seconds
   configOverrides: []

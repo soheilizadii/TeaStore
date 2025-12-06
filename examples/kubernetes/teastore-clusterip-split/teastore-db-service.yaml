@@ -1,3 +1,5 @@
+---
+# Source: teastore/templates/teastore-db-service.yaml
 apiVersion: v1
 kind: Service
 metadata:
@@ -6,10 +8,11 @@ metadata:
     app: teastore
     run: teastore-db
 spec:
-  ports:
-    - port: 3306
-      protocol: TCP
-      # appProtocol: TCP
-      name: tcp-teastore-db
+  type: ClusterIP
   selector:
+    app: teastore
     run: teastore-db
+  ports:
+    - name: mysql
+      port: 3306
+      protocol: TCP

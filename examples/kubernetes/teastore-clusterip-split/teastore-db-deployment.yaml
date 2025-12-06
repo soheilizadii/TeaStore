@@ -1,8 +1,14 @@
+---
+# Source: teastore/templates/teastore-db-deployment.yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: teastore-db
+  labels:
+    app: teastore
+    run: teastore-db
 spec:
+  replicas: 1
   selector:
     matchLabels:
       app: teastore
@@ -13,12 +19,30 @@ spec:
         app: teastore
         run: teastore-db
     spec:
+      initContainers:
+        - name: wait-for-otel-transformer
+          image: busybox:1.36
+          command:
+            - sh
+            - -c
+            - |
+              echo "🕓 Waiting for otel-transformer to be ready on port 10001..."
+              until nc -z otel-transformer 10001; do
+                echo "otel-transformer not ready yet... sleeping 5s"
+                sleep 5
+              done
+              echo "✅ otel-transformer is ready!"
       containers:
         - name: teastore-db
-          image: descartesresearch/teastore-db:1.4.2
+          image: "kieker/teastore-db:kieker-2.0.2"
           ports:
-            - containerPort: 3306
+            - name: mysql
+              containerPort: 3306
+              protocol: TCP
           resources:
+            requests:
+              cpu: 1000m
+              memory: 1000Mi
             limits:
-              memory: 16000Mi
-              cpu: 4000m
+              cpu: 2000m
+              memory: 2000Mi

@@ -1,0 +1,71 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    deployment.kubernetes.io/revision: "1"
+  creationTimestamp: "2025-11-22T14:28:38Z"
+  generation: 1
+  labels:
+    app: teastore
+    app.kubernetes.io/created-by: theodolite
+    deployed-for-benchmark: teastore
+    deployed-for-execution: teastore-users
+    run: otel-transformer
+  name: otel-transformer
+  namespace: default
+  resourceVersion: "243131"
+  uid: b6af3f1b-16b7-4df7-a767-211320ac089e
+spec:
+  progressDeadlineSeconds: 600
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app: teastore
+      run: otel-transformer
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: teastore
+        run: otel-transformer
+    spec:
+      containers:
+      - image: kieker/otel-transformer:kieker-2.0.2
+        imagePullPolicy: IfNotPresent
+        name: otel-transformer
+        ports:
+        - containerPort: 10001
+          protocol: TCP
+        resources: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+status:
+  availableReplicas: 1
+  conditions:
+  - lastTransitionTime: "2025-11-22T14:28:43Z"
+    lastUpdateTime: "2025-11-22T14:28:43Z"
+    message: Deployment has minimum availability.
+    reason: MinimumReplicasAvailable
+    status: "True"
+    type: Available
+  - lastTransitionTime: "2025-11-22T14:28:38Z"
+    lastUpdateTime: "2025-11-22T14:28:43Z"
+    message: ReplicaSet "otel-transformer-59cc8b9d8" has successfully progressed.
+    reason: NewReplicaSetAvailable
+    status: "True"
+    type: Progressing
+  observedGeneration: 1
+  readyReplicas: 1
+  replicas: 1
+  updatedReplicas: 1

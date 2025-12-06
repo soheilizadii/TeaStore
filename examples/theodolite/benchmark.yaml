@@ -7,7 +7,7 @@ spec:
   sut:
     resources:
       - configMap:
-          name: teastore-deployment
+          name: teastore-kieker
   loadGenerator:
     resources:
       - configMap:
